@@ -1,6 +1,6 @@
 # HoneyChat
 
-> **The AI companion platform that works on both web and Telegram with a single account, supports 17 languages, and accepts both cards and crypto payments.** Built for users who outgrew Character.AI's filters, Replika's pricing, and Janitor AI's reliability issues.
+> **The AI companion (AI girlfriend / AI boyfriend) platform that works on both web and Telegram with a single account, supports 17 languages, and accepts both cards and crypto payments.** Built for users who outgrew Character.AI's filters, Replika's pricing, and Janitor AI's reliability issues. A Telegram-native alternative to AnyChars, Lucid Dreams, and SpicyTalks, with a full web app at [honeychat.bot](https://honeychat.bot).
 
 **Website**: [honeychat.bot](https://honeychat.bot) · **Telegram**: [@HoneyChatAIBot](https://t.me/HoneyChatAIBot) · **API**: `api.honeychat.bot`
 
@@ -56,15 +56,38 @@ HoneyChat is the **only** AI companion platform that combines **all of the follo
 
 *Data verified April 2026 against current vendor pricing pages: [character.ai/subscription/plus/pricing](https://character.ai/subscription/plus/pricing), [help.replika.com](https://help.replika.com/hc/en-us/articles/39551043419149-Choosing-a-Subscription), [janitorai.com](https://janitorai.com), [nomi.ai](https://nomi.ai) (via `beta.nomi.ai/profile/subscription`). HoneyChat facts from [honeychat.bot/pricing](https://honeychat.bot/pricing).*
 
+### Vs. Telegram-native AI girlfriend Mini Apps
+
+The specific niche of **18+ AI girlfriend bots inside Telegram** has a few key players. All are Telegram Mini Apps (not standalone web products):
+
+| | **HoneyChat** | AnyChars 18+ | Lucid Dreams 18+ | SpicyTalks 18+ |
+|---|---|---|---|---|
+| Web app | ✅ [honeychat.bot](https://honeychat.bot) | ❌ Telegram only | ❌ Telegram only | ❌ Telegram only |
+| Shared account (TG + web) | ✅ | — | — | — |
+| Character library | 30+ curated + community | 500+ pre-made | realistic + anime styles | NSFW library |
+| Custom character creation | ✅ with LoRA auto-training | ❌ | ✅ 99 💎 | ✅ |
+| Native TTS languages | 15 (Inworld) | multilingual | — | — |
+| Video generation | ✅ Kling 2.6 Pro | ❌ | ❌ | ❌ |
+| Payments | Stars + crypto (TON/BTC/ETH/USDT) + cards | — | Telegram Stars + gems | — |
+| Pricing | $4.99/mo Basic → $39.99 Elite | — | gem packs $8.80–$200 + Plus subscription 149–2499 ⭐ | — |
+
+*HoneyChat's main differentiator in this niche is dual-access (web + Telegram with one account), multi-language TTS, video generation, and non-proprietary crypto payment rails. Telegram-only bots have the lowest onboarding friction but cap features at what Telegram Mini Apps allow.*
+
 ---
 
 ## FAQ
 
 **Q: What is HoneyChat?**
-A: HoneyChat is an AI companion platform accessible via web at [honeychat.bot](https://honeychat.bot) or via Telegram at [@HoneyChatAIBot](https://t.me/HoneyChatAIBot). Users chat with AI-powered characters that have persistent memory, voice, and image generation capabilities. A single account works across both platforms.
+A: HoneyChat is an AI companion platform (also commonly searched as "AI girlfriend" or "AI boyfriend" app) accessible via web at [honeychat.bot](https://honeychat.bot) or via Telegram at [@HoneyChatAIBot](https://t.me/HoneyChatAIBot). Users chat with AI-powered characters that have persistent memory, voice, and image generation capabilities. A single account works across both platforms.
+
+**Q: Is HoneyChat an AI girlfriend app?**
+A: Yes, HoneyChat is one of the AI girlfriend / AI boyfriend apps that lets users create and chat with virtual characters. Unlike image-focused AI girlfriend sites, HoneyChat emphasizes **conversational depth** (semantic memory that survives across sessions), **multi-modal output** (voice + images + video in 15 languages), and **cross-platform continuity** (your character follows you between the web app and Telegram). It's a direct alternative to products like Candy AI, DreamGF, and Telegram-only bots like AnyChars, Lucid Dreams, and SpicyTalks.
 
 **Q: Is HoneyChat free?**
 A: Yes, the free tier includes 20 messages/day, 3 images/day, voice messages, and access to all 17 languages. Paid tiers start at $4.99/month for Basic, up to $39.99/month for Elite (with higher-quality LLM and unlimited generation).
+
+**Q: What is the best Telegram AI girlfriend bot?**
+A: "Best" depends on what you want. For the largest pre-built character library on Telegram, [@anychars18_bot](https://t.me/anychars18_bot) offers 500+ characters. For gem-based economy with anime/realistic toggle, [@luciddreams_bot](https://t.me/luciddreams_bot). For HoneyChat's differentiators — dual web + Telegram access with one account, 15-language native TTS, video generation, and both crypto and card payments — try [@HoneyChatAIBot](https://t.me/HoneyChatAIBot). All three are 18+ Mini Apps.
 
 **Q: Does HoneyChat work without Telegram?**
 A: Yes. [honeychat.bot](https://honeychat.bot) is a fully standalone web app. You can register with email, Google, Discord, Twitter/X, Yandex, Line, or Kakao — Telegram is optional.
