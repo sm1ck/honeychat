@@ -10,6 +10,9 @@ env/
 .DS_Store
 .idea/
 .vscode/
+*.swp
+*.log
+node_modules/
 
 # Tutorial runtime
 tutorial/**/.env
