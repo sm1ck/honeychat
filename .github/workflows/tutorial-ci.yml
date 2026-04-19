@@ -1,0 +1,80 @@
+name: tutorial-ci
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tutorial/**'
+      - '.github/workflows/tutorial-ci.yml'
+  pull_request:
+    paths:
+      - 'tutorial/**'
+      - '.github/workflows/tutorial-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  security-grep:
+    name: security redaction grep
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure tutorial/ contains no sensitive constants
+        shell: bash
+        run: |
+          set +e
+          # Mirrors the rule set in the main docs/devto_posts/SECURITY_REDACTION.md.
+          # If the rule list changes there, update this pattern too.
+          PATTERN='(\$20[^0-9]|\$5[^0-9.]|\b3000\b.*steps|network_dim[[:space:]]*=[[:space:]]*[0-9]|8e-5|waiIllustrious|\b0\.65\b|\b0\.4\b[[:space:]]*gore|turn 6|turn 12|ALLOW_INSECURE|DAILY_COST_HARD_STOP|/admin/|costs:user:|mem:recent:|video_gen_lock|RESISTANCE_BLOCK|SYSTEM_MARKER|face-attributes|gore-2\.0|kuudere|dominant_boss|catgirl|soft_erotic|semi_nude|Vast\.ai.*Kohya)'
+          HITS=$(grep -rnE "$PATTERN" tutorial/ 2>/dev/null || true)
+          if [ -n "$HITS" ]; then
+            echo "::error::Tutorial contains redacted content:"
+            echo "$HITS"
+            exit 1
+          fi
+          echo "OK — no redacted constants in tutorial/"
+
+  test-01-memory:
+    name: 01-memory · pytest
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: tutorial/01-memory } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install -e ".[dev]"
+      - run: pytest -v
+
+  test-02-routing:
+    name: 02-routing · pytest
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: tutorial/02-routing } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install -e ".[dev]"
+      - run: pytest -v
+
+  test-04-ipadapter:
+    name: 04-ipadapter · workflow + pytest
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: tutorial/04-ipadapter } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Validate workflow.json parses
+        run: python -c "import json; json.loads(open('workflow.json').read())"
+      - run: pip install -e ".[dev]"
+      - run: pytest -v
+
+  validate-03-lora:
+    name: 03-lora · config toml parses
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: tutorial/03-lora } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: TOML parse check
+        run: python -c "import tomllib; tomllib.loads(open('kohya-config.toml').read())"

@@ -1,0 +1,15 @@
+services:
+  router:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      PRIMARY_MODEL:     ${PRIMARY_MODEL:-meta-llama/llama-3.1-8b-instruct:free}
+      FALLBACK_MODEL:    ${FALLBACK_MODEL:-mistralai/mistral-7b-instruct:free}
+      LAST_RESORT_MODEL: ${LAST_RESORT_MODEL:-nousresearch/hermes-3-llama-3.1-405b}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

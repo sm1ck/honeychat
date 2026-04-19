@@ -1,0 +1,20 @@
+[project]
+name = "honeychat-tutorial-04-ipadapter"
+version = "0.1.0"
+description = "Tutorial: IP-Adapter Plus + LoRA for product catalog rendering via ComfyUI"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.32,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

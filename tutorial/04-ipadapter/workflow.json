@@ -1,0 +1,99 @@
+{
+  "_meta": {
+    "title": "IP-Adapter Plus + LoRA — character + outfit reference",
+    "description": "Minimal ComfyUI workflow for the pattern in honeychat.bot's article 04. Reader fills in model paths and tunes IP-Adapter weight/end_at to their base.",
+    "tunables": {
+      "ipadapter.weight":  "lower half of 0-1 is usually where identity + outfit both hold",
+      "ipadapter.end_at":  "upper half of 0-1 so LoRA reasserts on final steps",
+      "lora.strength_model": "character LoRA strength (0.6 - 1.0 typical)",
+      "lora.strength_clip":  "clip-side LoRA strength (often = strength_model)"
+    }
+  },
+
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": { "ckpt_name": "<your-sdxl-base.safetensors>" }
+  },
+
+  "2": {
+    "class_type": "LoraLoader",
+    "inputs": {
+      "model": ["1", 0],
+      "clip":  ["1", 1],
+      "lora_name":         "<your-character-lora.safetensors>",
+      "strength_model":    "<tune>",
+      "strength_clip":     "<tune>"
+    }
+  },
+
+  "3": {
+    "class_type": "FreeU_V2",
+    "inputs": { "model": ["2", 0], "b1": 1.1, "b2": 1.2, "s1": 0.9, "s2": 0.2 }
+  },
+
+  "4": {
+    "class_type": "IPAdapterModelLoader",
+    "inputs": { "ipadapter_file": "ip-adapter-plus_sdxl_vit-h.safetensors" }
+  },
+
+  "5": {
+    "class_type": "LoadImage",
+    "inputs": { "image": "<outfit-reference.png>" }
+  },
+
+  "6": {
+    "class_type": "IPAdapterAdvanced",
+    "inputs": {
+      "model":        ["3", 0],
+      "ipadapter":    ["4", 0],
+      "image":        ["5", 0],
+      "weight":       "<tune>",
+      "weight_type":  "ease in-out",
+      "combine_embeds": "concat",
+      "start_at":     0.0,
+      "end_at":       "<tune>",
+      "embeds_scaling": "V only"
+    }
+  },
+
+  "7": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "clip": ["2", 1], "text": "<positive prompt, scene and composition only — no character-name tokens>" }
+  },
+
+  "8": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "clip": ["2", 1], "text": "lowres, blurry, bad anatomy, extra limbs" }
+  },
+
+  "9": {
+    "class_type": "EmptyLatentImage",
+    "inputs": { "width": 1024, "height": 1024, "batch_size": 1 }
+  },
+
+  "10": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model":      ["6", 0],
+      "positive":   ["7", 0],
+      "negative":   ["8", 0],
+      "latent_image": ["9", 0],
+      "seed":       0,
+      "steps":      28,
+      "cfg":        5.5,
+      "sampler_name": "dpmpp_2m_sde_gpu",
+      "scheduler":  "karras",
+      "denoise":    1.0
+    }
+  },
+
+  "11": {
+    "class_type": "VAEDecode",
+    "inputs": { "samples": ["10", 0], "vae": ["1", 2] }
+  },
+
+  "12": {
+    "class_type": "SaveImage",
+    "inputs": { "images": ["11", 0], "filename_prefix": "outfit_preview" }
+  }
+}

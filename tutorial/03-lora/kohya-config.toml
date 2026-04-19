@@ -1,0 +1,54 @@
+# Kohya_ss SDXL LoRA training config — generic template
+#
+# Replace every `<tune>` value based on your dataset and base model.
+# Replace every `<path/to/...>` with your actual paths.
+# See Kohya docs for the full parameter reference:
+# https://github.com/bmaltais/kohya_ss/wiki/LoRA-training-guide
+
+[model_arguments]
+pretrained_model_name_or_path = "<path/to/sdxl-base-or-finetune.safetensors>"
+v2                            = false
+v_parameterization            = false
+
+[dataset_arguments]
+train_data_dir     = "./dataset/train"  # folders must be named like "5_character_name"
+resolution         = "1024,1024"
+enable_bucket      = true
+min_bucket_reso    = 256
+max_bucket_reso    = 2048
+caption_extension  = ".txt"
+shuffle_caption    = true
+keep_tokens        = 1
+
+[training_arguments]
+output_dir      = "./output"
+output_name     = "<your_character_v1>"
+save_model_as   = "safetensors"
+save_every_n_epochs = 1
+save_precision  = "fp16"
+logging_dir     = "./logs"
+
+# ── Training steps and batch — VRAM-bound. Tune for your hardware.
+learning_rate   = "<tune>"     # e.g. 5e-5 .. 1e-4 for SDXL LoRA
+max_train_steps = "<tune>"     # e.g. 1000 .. 3000 depending on dataset size
+train_batch_size = "<tune>"    # 1 fits 12GB, 2–4 wants 24GB+
+
+lr_scheduler    = "cosine_with_restarts"
+lr_warmup_steps = 50
+optimizer_type  = "AdamW8bit"
+
+mixed_precision = "bf16"
+gradient_accumulation_steps = 1
+gradient_checkpointing = true
+max_grad_norm   = 1.0
+
+# ── LoRA shape. Higher dim = more capacity = more overfitting risk.
+[network_arguments]
+network_module = "networks.lora"
+network_dim    = "<tune>"  # typical: 8 .. 64
+network_alpha  = "<tune>"  # often = network_dim or network_dim/2
+
+[sample_arguments]
+sample_every_n_epochs = 1
+sample_prompts        = "./sample-prompts.txt"
+sample_sampler        = "euler_a"
