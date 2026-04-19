@@ -1,6 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Editors / OS
 .DS_Store
 .idea/
 .vscode/
-*.swp
-*.log
-node_modules/
+
+# Tutorial runtime
+tutorial/**/.env
+tutorial/**/out/
+tutorial/**/output/
+tutorial/**/logs/
+tutorial/**/dataset/train/
